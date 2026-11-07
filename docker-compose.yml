@@ -1,0 +1,21 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgis/postgis:15-3.3
+    container_name: nexroute_db
+    environment:
+      POSTGRES_DB: nexroute
+      POSTGRES_USER: nexroute
+      POSTGRES_PASSWORD: nexroute_secret
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U nexroute"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pgdata:
